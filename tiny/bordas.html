@@ -166,11 +166,15 @@
         </style>
         <script>
             window.onload = function() {
-                var maxSize = document.getElementById('box').offsetWidth;
-                document.getElementById('topLeft').setAttribute("max", maxSize);
-                document.getElementById('topRight').setAttribute("max", maxSize);
-                document.getElementById('bottomLeft').setAttribute("max", maxSize);
-                document.getElementById('bottomRight').setAttribute("max", maxSize);
+                var maxH = document.getElementById('box').offsetHeight;
+                document.getElementById('box').style.width = maxH +'px';
+                alert(maxH, document.getElementById('box').style.width);
+
+                document.getElementById('topLeft').setAttribute("max", maxH);
+                document.getElementById('topRight').setAttribute("max", maxH);
+                document.getElementById('bottomLeft').setAttribute("max", maxH);
+                document.getElementById('bottomRight').setAttribute("max", maxH);
+
             }
 
             function radiusChange(ele) {
@@ -241,13 +245,13 @@
         </main>
         <aside>
             <label for="topLeft">Topo-esquerda: </label><br>
-            <input id="topLeft" value=0 autofocus type="range" step=5 min="0" onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
+            <input id="topLeft" value=0 autofocus type="range" step=1 min="0" onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
             <label for="topRight">Topo-direita: </label><br>
-            <input id="topRight" value=0 accesskey="d" type="range" step=5 min="0" onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
+            <input id="topRight" value=0 accesskey="d" type="range" step=1 min="0" onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
             <label for="bottomLeft">Abaixo-esquerda: </label><br>
-            <input id="bottomLeft" value=0 type="range" min="0" step=5 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
+            <input id="bottomLeft" value=0 type="range" min="0" step=1 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
             <label for="bottomRight">Abaixo-direita: </label><br>
-            <input id="bottomRight" value=0 type="range" min="0" step=5 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
+            <input id="bottomRight" value=0 type="range" min="0" step=1 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
             <br>
         </aside>
     </body>
