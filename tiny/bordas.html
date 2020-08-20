@@ -96,6 +96,10 @@
                 background-color:linen;
             }
 
+            h1 {
+                display: inline-block;
+            }
+
             #copyBtn {
                 vertical-align:bottom;
                 border-radius: 0 1.5em 1.5em 0;
@@ -105,6 +109,55 @@
                 width: 4em;
                 background-color: bisque;
             }
+
+            #helpBtn {
+                border-radius: 1.5em 1.5em 1.5em 1.5em;
+                border: none;
+                margin: 0;
+                padding: 0;
+                vertical-align:super;
+                height: 2em;
+                width: 2em;
+                background-color:gainsboro;
+            }
+
+            button {
+                cursor: pointer;
+            }
+
+            .modal {
+                position: fixed;
+                z-index: 1;
+                text-align: center;
+                width: 100%;
+                display: none;
+                height: 100%;
+                top: 0;
+                left: 0;
+                background-color: rgba(0, 0,0, 0.3);
+            }
+
+            .modal-content {
+                height: 50%;
+                margin: 0 auto;
+                margin-top: 10%;
+                width: 50%;
+                padding: 1em;
+                background-color:floralwhite;
+                border-radius: 20px;
+            }
+
+            #closeModal {
+                float: right;
+                cursor: pointer;
+                font-size: 2em;
+            }
+
+            p {
+                clear: both;
+                line-height: 1.5em;
+            }
+
 
             @media screen and (max-width: 720px) and (orientation: portrait) {
                 header {
@@ -172,35 +225,28 @@
             window.onload = function() {
                 var maxH = document.getElementById('box').offsetHeight;
                 document.getElementById('box').style.width = maxH +'px';
-
-                document.getElementById('topLeft').setAttribute("max", maxH);
-                document.getElementById('topRight').setAttribute("max", maxH);
-                document.getElementById('bottomLeft').setAttribute("max", maxH);
-                document.getElementById('bottomRight').setAttribute("max", maxH);
-
             }
 
             function radiusChange(ele) {
-                var maxValue = document.getElementById('topLeft').getAttribute('max');
                 var tl = parseFloat(document.getElementById('topLeft').value);
                 var tr = parseFloat(document.getElementById('topRight').value);
                 var bl = parseFloat(document.getElementById('bottomLeft').value);
                 var br = parseFloat(document.getElementById('bottomRight').value);
-                document.getElementById('texto').style.opacity = (tl+tr+bl+br)/maxValue*0.25;
+                document.getElementById('texto').style.opacity = (tl+tr+bl+br)*0.01*0.25;
 
                 var boxStyle = document.getElementById('box').style;
 
                 if (ele.id == 'topLeft') {
-                    boxStyle.borderTopLeftRadius = ele.value + 'px';
+                    boxStyle.borderTopLeftRadius = ele.value + '%';
                 }
                 else if (ele.id == 'topRight') {
-                    boxStyle.borderTopRightRadius = ele.value + 'px';
+                    boxStyle.borderTopRightRadius = ele.value + '%';
                 }
                 else if (ele.id == 'bottomLeft') {
-                    boxStyle.borderBottomLeftRadius = ele.value + 'px';
+                    boxStyle.borderBottomLeftRadius = ele.value + '%';
                 }
                 else {
-                    boxStyle.borderBottomRightRadius = ele.value + 'px';
+                    boxStyle.borderBottomRightRadius = ele.value + '%';
                 }
 
                 document.getElementById('output').value = 'border-radius: ' +(boxStyle.borderTopLeftRadius||0)+ ' '+ (boxStyle.borderTopRightRadius||0)+ ' '+ (boxStyle.borderBottomLeftRadius||0) + ' ' + (boxStyle.borderBottomRightRadius||0) + '; ';
@@ -235,10 +281,29 @@
             function desfocus() {
                 document.getElementById('box').style.boxShadow = "";
             }
+
+            function closeHelp() {
+                document.getElementById("helpModal").style.display = "none";
+            }
+            function openHelp() {
+                document.getElementById("helpModal").style.display = "block";
+            }
         </script>
     </head>
     <body>
-        <header><h1>border-radius</h1></header>
+        <header>
+            <h1>border-radius</h1>
+            <button id="helpBtn" onclick="openHelp()""> <i class="fas fa-question" title="Help me"></i></button>
+
+            <div id="helpModal" class="modal">
+                <div class="modal-content">
+                    <button id="closeModal" onclick="closeHelp()">&times;</button>
+                    <h2>O que é isso?</h2>
+                    <p>Esse é um site simples que permite visualizar alterações feitas nas bordas de
+                        um objeto HTML e copiar o código CSS para o clipboard.</p>
+                </div>
+            </div>
+        </header>
         <main>
             <div id="box"><span id="texto"><3</span></div>
             <input type="text" id="output" value="border-radius: 0 0 0 0;" readonly>
@@ -248,13 +313,13 @@
         </main>
         <aside>
             <label for="topLeft">Topo-esquerda: </label><br>
-            <input id="topLeft" value=0 autofocus type="range" step=1 min="0" onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
+            <input id="topLeft" value=0 autofocus type="range" step=1 min=0 max=100 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
             <label for="topRight">Topo-direita: </label><br>
-            <input id="topRight" value=0 accesskey="d" type="range" step=1 min="0" onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
+            <input id="topRight" value=0 accesskey="d" type="range" step=1 min=0 max=100 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
             <label for="bottomLeft">Abaixo-esquerda: </label><br>
-            <input id="bottomLeft" value=0 type="range" min="0" step=1 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
+            <input id="bottomLeft" value=0 type="range" min="0" max=100 step=1 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
             <label for="bottomRight">Abaixo-direita: </label><br>
-            <input id="bottomRight" value=0 type="range" min="0" step=1 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
+            <input id="bottomRight" value=0 type="range" min="0" max=100 step=1 onfocus="cornerFocus(this)" onblur="desfocus()" onchange="radiusChange(this)"><br>
             <br>
         </aside>
     </body>
